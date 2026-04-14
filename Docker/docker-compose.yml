@@ -1,0 +1,23 @@
+services:
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: sqlserver
+    environment:
+      SA_PASSWORD: "YourStrong!Passw0rd"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+
+  todo-app:
+    build: .
+    container_name: todo-app
+    ports:
+      - "5000:5000"
+    environment:
+      DB_HOST: sqlserver
+      DB_USER: sa
+      DB_PASSWORD: YourStrong!Passw0rd
+      DB_DATABASE: todo-db
+    depends_on:
+      - sqlserver
