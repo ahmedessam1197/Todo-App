@@ -10,16 +10,13 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                checkout scm
+                git url: 'https://github.com/ahmedessam1197/Todo-App.git', branch: 'main'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                sh '''
-                    ls -la
-                    docker build -t $DOCKER_IMAGE:$DOCKER_TAG ./Docker
-                '''
+                sh "docker build -t $DOCKER_IMAGE:$DOCKER_TAG ./Docker"
             }
         }
 
@@ -31,7 +28,7 @@ pipeline {
                     passwordVariable: 'DOCKER_PASS'
                 )]) {
                     sh '''
-                        echo "$DOCKER_PASS" | docker login --username "$DOCKER_USER" --password-stdin
+                        echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
                         docker push $DOCKER_IMAGE:$DOCKER_TAG
                     '''
                 }
@@ -40,19 +37,17 @@ pipeline {
 
         stage('Deploy to Kubernetes') {
             steps {
-                sh '''
-                    kubectl apply -f Kubernetes/
-                '''
+                sh "kubectl apply -f Kubernetes/"
             }
         }
     }
 
     post {
         success {
-            echo 'Pipeline SUCCESS 🚀'
+            echo "Pipeline SUCCESS"
         }
         failure {
-            echo 'Pipeline FAILED ❌'
+            echo "Pipeline FAILED"
         }
     }
 }
