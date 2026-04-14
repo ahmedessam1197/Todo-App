@@ -29,7 +29,7 @@ pipeline {
                 )]) {
                     sh '''
                         echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-                        docker push $DOCKER_IMAGE:$DOCKER_TAG
+                        docker push ahmed277/todo-app:latest
                     '''
                 }
             }
