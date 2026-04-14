@@ -1,21 +1,23 @@
+
+
 pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "ahmed277/todo-app"
-        DOCKER_TAG = "latest"
+        IMAGE_NAME = "ahmed277/todo-app:latest"
     }
 
     stages {
+
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/ahmedessam1197/Todo-App.git', branch: 'main'
+                git branch: 'main', url: 'https://github.com/ahmedessam1197/Todo-App.git'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                sh "docker build -t $DOCKER_IMAGE:$DOCKER_TAG ./Docker"
+                sh "docker build -t ${IMAGE_NAME} ./Docker"
             }
         }
 
@@ -27,8 +29,8 @@ pipeline {
                     passwordVariable: 'DOCKER_PASS'
                 )]) {
                     sh '''
-                        echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-                        docker push $DOCKER_IMAGE:$DOCKER_TAG
+                        echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+                        docker push $IMAGE_NAME
                     '''
                 }
             }
@@ -36,7 +38,9 @@ pipeline {
 
         stage('Deploy to Kubernetes') {
             steps {
-                sh "kubectl apply -f Kubernetes/"
+                sh '''
+                    kubectl apply -f Kubernetes/ --validate=false
+                '''
             }
         }
     }
@@ -45,6 +49,7 @@ pipeline {
         success {
             echo "Pipeline SUCCESS"
         }
+
         failure {
             echo "Pipeline FAILED"
         }
