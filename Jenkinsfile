@@ -30,11 +30,12 @@ pipeline {
 
         stage('Deploy to Kubernetes') {
             steps {
-                sh 'kubectl apply -f Kubernetes/'
+                withCredentials([file(credentialsId: 'kubeconfig-creds', variable: 'KUBECONFIG')]) {
+                    sh 'kubectl get nodes'
+                    sh 'kubectl apply -f Kubernetes/'
+                }
             }
         }
-
-    }
 
     post {
         always {
