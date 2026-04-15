@@ -1,6 +1,6 @@
 # DevSecOps Todo Application
 
-A production-style Todo application demonstrating a complete **DevSecOps pipeline** using modern cloud-native technologies.
+A production-style Todo application demonstrating a complete DevSecOps pipeline using modern cloud-native technologies.
 
 The project showcases how a simple Flask application can be containerized, scanned for vulnerabilities, deployed to Kubernetes, and continuously delivered using GitOps practices.
 
