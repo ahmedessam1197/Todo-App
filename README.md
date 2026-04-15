@@ -1,65 +1,166 @@
-# Todo-App
+# DevSecOps Todo Application
 
-Developed a simple and user-friendly Todo application to manage daily tasks efficiently.
-Implemented core CRUD operations (Create, Read, Update, Delete) for task management.
-Designed a clean and responsive user interface for better user experience.
-Utilized browser local storage to persist user data without a backend.
-Focused on simplicity, performance, and usability.
+A production-style Todo application demonstrating a complete **DevSecOps pipeline** using modern cloud-native technologies.
+
+The project showcases how a simple Flask application can be containerized, scanned for vulnerabilities, deployed to Kubernetes, and continuously delivered using GitOps practices.
+
+---
 
 # Project Architecture
 
-User interacts with UI → JavaScript handles logic → DOM is updated → Data is stored in Local Storage → Tasks are rendered dynamically.
-Flow:
-User Input → JavaScript Logic → DOM Manipulation → Local Storage → UI Update
+Developer → GitHub → Jenkins CI → Docker Build → Trivy Security Scan → DockerHub → ArgoCD → Kubernetes Cluster → Prometheus & Grafana Monitoring
 
-# Technologies Used
+---
 
-HTML5 – structure of the application
-CSS3 – styling and layout
-JavaScript (ES6+) – application logic and interactivity
-Local Storage – data persistence in browser
-Git & GitHub – version control
+# Tech Stack
 
-# Project Features
+**Application**
 
-• Add new tasks
-• Edit existing tasks
-• Delete tasks
-• Mark tasks as completed
-• Persistent data using Local Storage
-• Responsive and clean UI
+* Python Flask
+* SQL Server
 
-# Application Logic
+**Containerization**
 
-The application works using pure JavaScript without any frameworks.
-Main functionalities:
-Capture user input
-Store tasks in Local Storage
-Dynamically update the DOM
-Handle user actions (add, edit, delete, complete)
+* Docker
+
+**Container Orchestration**
+
+* Kubernetes (Minikube)
+
+**CI/CD**
+
+* Jenkins
+
+**Security**
+
+* Trivy container vulnerability scanning
+
+**GitOps**
+
+* ArgoCD
+
+**Monitoring**
+
+* Prometheus
+* Grafana
+
+---
+
+# CI/CD Pipeline
+
+1. Developer pushes code to GitHub
+2. Jenkins pipeline triggers automatically
+3. Docker image is built
+4. Image scanned using Trivy
+5. Secure image pushed to DockerHub
+6. Kubernetes manifests updated
+7. ArgoCD syncs deployment automatically
+
+---
+
+# Kubernetes Deployment
+
+Application is deployed using:
+
+* Deployment
+* Service
+* Secrets
+* Horizontal Pod Autoscaler (HPA)
+* Ingress
+
+Features implemented:
+
+* Resource limits
+* Liveness & Readiness probes
+* Secure environment variables
+* Auto scaling
+
+---
+
+# Monitoring
+
+Cluster monitoring is implemented using:
+
+* Prometheus for metrics collection
+* Grafana for visualization dashboards
+
+Metrics monitored:
+
+* CPU usage
+* Memory usage
+* Pod health
+* Cluster performance
+
+---
+
+# Project Structure
+
+```
+todo-app
+│
+├── app.py
+├── requirements.txt
+├── Dockerfile
+├── Jenkinsfile
+│
+└── Kubernetes
+    ├── deployment-app.yml
+    ├── service.yml
+    ├── secret.yml
+    ├── hpa.yml
+```
+
+---
 
 # How to Run the Project
 
-Clone the repository:
+Clone the repository
+
+```
 git clone https://github.com/ahmedessam1197/Todo-App.git
-Navigate to the project:
-cd Todo-App
-Run the application:
-Open index.html in your browser
-or use Live Server
+```
+
+Build Docker image
+
+```
+docker build -t todo-app .
+```
+
+Run with Docker
+
+```
+docker run -p 5000:5000 todo-app
+```
+
+Deploy to Kubernetes
+
+```
+kubectl apply -f Kubernetes/
+```
+
+---
+
+# DevSecOps Concepts Demonstrated
+
+* CI/CD Pipeline
+* Container Security Scanning
+* Infrastructure as Code
+* GitOps Deployment
+* Kubernetes Best Practices
+* Cloud Native Monitoring
+
+---
 
 # Future Improvements
 
-Add backend integration (Node.js / Django)
-Implement user authentication
-Add task categories and priorities
-Improve UI/UX design
-Add due dates and reminders
+* Helm charts
+* Terraform infrastructure
+* Kubernetes RBAC
+* Alertmanager notifications
+* Production cloud deployment (AWS / Azure / GCP)
 
-# Concepts Demonstrated
+---
 
-DOM Manipulation
-Event Handling
-Local Storage Usage
-CRUD Operations
-Frontend Development Basics
+# Author
+
+Ahmed Essam
