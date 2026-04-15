@@ -30,6 +30,8 @@ pipeline {
                         kubectl apply -f Kubernetes/
                     '''
                 }
+                    '''
+                }
             }
         }
     }
