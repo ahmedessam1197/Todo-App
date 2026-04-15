@@ -8,12 +8,6 @@ pipeline {
 
     stages {
 
-        stage('Clone Repository') {
-            steps {
-                git 'https://github.com/ahmedessam1197/Todo-App'
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t $DOCKER_IMAGE:$DOCKER_TAG .'
@@ -33,12 +27,6 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 sh 'kubectl apply -f Kubernetes/'
-            }
-        }
-
-        stage('Cleanup') {
-            steps {
-                sh 'docker system prune -f'
             }
         }
 
